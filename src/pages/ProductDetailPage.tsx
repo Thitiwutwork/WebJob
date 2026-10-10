@@ -38,20 +38,24 @@ export const ProductDetailPage: React.FC = () => {
   const bundleOptions = [
     {
       id: 'standard' as BundleTier,
-      name: 'Standard (เฉพาะ Source Code)',
-      badge: 'Standalone',
+      name: 'เฉพาะ Source Code',
+      badge: 'สำหรับนักพัฒนา',
       addedPrice: 0,
-      description: 'รับ Full Source Code 100% พร้อมคู่มือติดตั้ง สำหรับนักพัฒนาที่นำไปติดตั้งเอง',
-      savingsText: null,
+      description: 'รับ Source Code ตัวเต็ม 100% พร้อมคู่มือ สำหรับนำไปติดตั้งและ Deploy เอง',
+      savingsHighlight: null,
+      savingsValue: null,
+      priceSubtext: 'ราคาเฉพาะโค้ด',
       features: ['Full Source Code 100%', 'รับประกันแก้ไขบั๊กเดิม 7 วัน', 'Commercial License'],
     },
     {
       id: 'starter_bundle' as BundleTier,
-      name: 'Starter Bundle — โค้ด + ติดตั้ง + Care Basic 1 เดือน',
-      badge: '⭐ ยอดนิยม ประหยัด ฿1,400',
+      name: 'โค้ด + ติดตั้ง + ดูแล 1 เดือน',
+      badge: '⭐ แนะนำ คุ้มค่าที่สุด',
       addedPrice: 890,
-      description: 'บริการติดตั้ง Deploy ขึ้น Cloud (Vercel/Supabase) ให้พร้อมใช้งานจริง + ฟรีดูแลระบบ Care Basic 1 เดือน',
-      savingsText: 'ประหยัด ฿1,400 (ปกติค่าติดตั้ง ฿1,500 + Care Basic ฿790 = ฿2,290)',
+      description: 'ทีมงานช่วยติดตั้ง Deploy ขึ้น Cloud ให้พร้อมใช้งานจริงทันที + ซัพพอร์ตดูแลระบบ 1 เดือนเต็ม',
+      savingsHighlight: 'แลกซื้อบริการติดตั้งและดูแล (มูลค่า ฿2,290) จ่ายเพิ่มเพียง ฿890',
+      savingsValue: 1400,
+      priceSubtext: 'จ่ายเพิ่ม ฿890 (ประหยัด ฿1,400)',
       features: [
         'Full Source Code 100%',
         'บริการ Deploy ขึ้น Cloud ให้พร้อมใช้งานจริง',
@@ -61,11 +65,13 @@ export const ProductDetailPage: React.FC = () => {
     },
     {
       id: 'business_bundle' as BundleTier,
-      name: 'Business Turnkey — โค้ด + ติดตั้ง + ปรับแบรนด์ + Care Pro 3 เดือน',
-      badge: '👑 คุ้มค่าสูงสุดสำหรับธุรกิจ',
+      name: 'โค้ด + ปรับแต่งร้าน + ดูแล 3 เดือน',
+      badge: '👑 เหมาะสำหรับธุรกิจ',
       addedPrice: 2990,
-      description: 'ระบบพร้อมรันธุรกิจแบบ Turnkey ติดตั้ง Custom Domain ปรับโลโก้/สี และดูแลระดับ Pro ต่อเนื่อง 3 เดือนเต็ม',
-      savingsText: 'ประหยัด ฿4,980 (ปกติค่าติดตั้ง+ปรับแบรนด์ ฿3,500 + Care Pro 3 ด. ฿4,470 = ฿7,970)',
+      description: 'ติดตั้งเชื่อมต่อ Custom Domain + ปรับแต่งโลโก้และสีแบรนด์ + ดูแลระดับ Pro ต่อเนื่อง 3 เดือนเต็ม',
+      savingsHighlight: 'แลกซื้อบริการเซ็ตอัปและดูแล (มูลค่า ฿7,970) จ่ายเพิ่มเพียง ฿2,990',
+      savingsValue: 4980,
+      priceSubtext: 'จ่ายเพิ่ม ฿2,990 (ประหยัด ฿4,980)',
       features: [
         'Full Source Code 100%',
         'บริการติดตั้งเชื่อมต่อ Custom Domain เบ็ดเสร็จ',
@@ -310,10 +316,11 @@ export const ProductDetailPage: React.FC = () => {
                             )}
                           </div>
                           <p className="text-xs text-slate-400 mt-1 leading-relaxed">{opt.description}</p>
-                          {opt.savingsText && (
-                            <span className="text-[11px] text-emerald-400 font-mono font-semibold block mt-1">
-                              ✓ {opt.savingsText}
-                            </span>
+                          {opt.savingsHighlight && (
+                            <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono font-medium">
+                              <Sparkles className="w-3 h-3 shrink-0 text-emerald-400" />
+                              <span>{opt.savingsHighlight}</span>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -321,13 +328,9 @@ export const ProductDetailPage: React.FC = () => {
                         <span className="text-base font-black text-white font-mono block">
                           ฿{optPrice.toLocaleString('th-TH')}
                         </span>
-                        {opt.addedPrice > 0 ? (
-                          <span className="text-[10px] text-indigo-300 font-mono">
-                            (+฿{opt.addedPrice.toLocaleString()})
-                          </span>
-                        ) : (
-                          <span className="text-[10px] text-slate-500 font-mono">ราคาปกติ</span>
-                        )}
+                        <span className="text-[10px] text-slate-400 font-mono block mt-0.5">
+                          {opt.priceSubtext}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -337,22 +340,28 @@ export const ProductDetailPage: React.FC = () => {
           </div>
 
           {/* Dynamic Pricing Box */}
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 flex items-baseline justify-between">
+          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 flex items-center justify-between">
             <div>
               <span className="text-xs text-slate-400 font-mono block">
-                ยอดชำระสุทธิ ({currentBundle.name.split('—')[0]})
+                ยอดชำระรวม: {currentBundle.name}
               </span>
               <span className="text-3xl font-black text-white font-mono">
                 ฿{finalPrice.toLocaleString('th-TH')}
               </span>
             </div>
-            {currentBundle.addedPrice > 0 ? (
-              <span className="text-xs text-emerald-400 font-mono bg-emerald-950/60 px-2 py-1 rounded border border-emerald-800/40">
-                ประหยัดแบบ Bundle
-              </span>
+            {currentBundle.savingsValue ? (
+              <div className="text-right">
+                <span className="text-xs text-emerald-400 font-mono bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/40 inline-flex items-center gap-1 font-bold">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  ประหยัด ฿{currentBundle.savingsValue.toLocaleString()}
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono block mt-1">
+                  (เทียบกับซื้อบริการแยก)
+                </span>
+              </div>
             ) : (
-              <span className="text-xs text-slate-400 font-mono bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                One-Time Payment
+              <span className="text-xs text-slate-400 font-mono bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
+                เฉพาะ Source Code
               </span>
             )}
           </div>
