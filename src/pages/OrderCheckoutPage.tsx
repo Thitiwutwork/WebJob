@@ -135,66 +135,56 @@ export const OrderCheckoutPage: React.FC = () => {
             </div>
           )}
 
-          {/* Account info card */}
+          {/* Account info & QR Card */}
           <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-6">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <CreditCard className="w-5 h-5 text-indigo-400" />
-              ช่องทางการชำระเงิน (ธนาคาร & PromptPay)
+              ช่องทางการชำระเงิน (ธนาคาร & Thai QR PromptPay)
             </h3>
 
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs">
-              <div className="flex justify-between items-center">
-                <span className="text-slate-400">ธนาคาร</span>
-                <span className="text-white font-bold">{settings?.bank_name || 'ธนาคารกสิกรไทย (KBANK)'}</span>
+            {/* QR Code Container */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 p-5 rounded-2xl bg-slate-950 border border-slate-800">
+              <div className="w-52 shrink-0 bg-white p-2.5 rounded-2xl shadow-xl border border-slate-700/40">
+                <img
+                  src="/images/promptpay-qr.png"
+                  alt="Thai QR Payment - PromptPay นาย ฐิติวุฒิ พุกภิญโญ"
+                  className="w-full h-auto rounded-xl object-contain block"
+                />
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-400">เลขที่บัญชี</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-indigo-400 font-bold text-sm tracking-wider">
-                    {settings?.bank_account_number || '147-1-89244-6'}
+
+              <div className="space-y-3 flex-1 font-mono text-xs w-full">
+                <div className="p-3 rounded-xl bg-indigo-950/40 border border-indigo-800/40 space-y-1">
+                  <span className="text-[11px] text-indigo-300 font-bold block">
+                    ⚡ สแกนได้จากทุกแอปธนาคาร
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(settings?.bank_account_number || '147-1-89244-6');
-                      setCopiedBank(true);
-                      setTimeout(() => setCopiedBank(false), 2000);
-                    }}
-                    className="p-1 px-2 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[10px] flex items-center gap-1 border border-slate-800 transition-colors cursor-pointer"
-                  >
-                    {copiedBank ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                    <span>{copiedBank ? 'คัดลอกแล้ว' : 'คัดลอก'}</span>
-                  </button>
+                  <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                    เปิดแอปธนาคารของคุณ (K+, SCB, KMA, Krungthai NEXT ฯลฯ) แล้วสแกน QR Code ได้ทันที
+                  </p>
                 </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-400">ชื่อบัญชี</span>
-                <span className="text-white">{settings?.bank_account_name || 'นาย ธิติวัฒน์ (Thitiwut)'}</span>
-              </div>
-              <div className="flex justify-between items-center border-t border-slate-800 pt-2">
-                <span className="text-slate-400">PromptPay ID</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-purple-400 font-bold">
-                    {settings?.promptpay_number || '098-941-8924'}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(settings?.promptpay_number || '098-941-8924');
-                      setCopiedPromptpay(true);
-                      setTimeout(() => setCopiedPromptpay(false), 2000);
-                    }}
-                    className="p-1 px-2 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[10px] flex items-center gap-1 border border-slate-800 transition-colors cursor-pointer"
-                  >
-                    {copiedPromptpay ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                    <span>{copiedPromptpay ? 'คัดลอกแล้ว' : 'คัดลอก'}</span>
-                  </button>
+
+                <div className="space-y-2 pt-1">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-slate-400">ชื่อบัญชี:</span>
+                    <span className="text-white font-bold font-sans">นาย ฐิติวุฒิ พุกภิญโญ</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-slate-400">ธนาคาร:</span>
+                    <span className="text-emerald-400 font-bold font-sans">กสิกรไทย (KBANK / K+)</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-slate-400">เลขบัญชี:</span>
+                    <span className="text-slate-300 font-bold tracking-wider">xxx-x-x6751-x</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs border-t border-slate-800/80 pt-2">
+                    <span className="text-slate-400">เลขอ้างอิง QR:</span>
+                    <span className="text-indigo-400 font-bold">004999140755892</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center p-4 rounded-2xl bg-indigo-950/20 border border-indigo-800/40 space-y-2">
-              <span className="text-xs text-indigo-300 font-mono block">ยอดที่ต้องชำระตรงกัน</span>
+            <div className="text-center p-4 rounded-2xl bg-emerald-950/20 border border-emerald-800/40 space-y-1">
+              <span className="text-xs text-emerald-300 font-mono block">ยอดที่ต้องโอนชำระ</span>
               <span className="text-3xl font-black text-white font-mono">
                 ฿{totalAmount.toLocaleString()}
               </span>

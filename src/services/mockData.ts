@@ -406,7 +406,7 @@ export const INITIAL_SETTINGS: SiteSettings = {
   github_url: '',
   domain: 'namenoname.store',
   bank_name: 'ธนาคารกสิกรไทย (Kasikorn Bank)',
-  bank_account_number: '147-1-89244-6',
-  bank_account_name: 'นาย ธิติวัฒน์ (Thitiwut)',
-  promptpay_number: '098-941-8924',
+  bank_account_number: 'xxx-x-x6751-x',
+  bank_account_name: 'นาย ฐิติวุฒิ พุกภิญโญ',
+  promptpay_number: 'สแกนผ่าน Thai QR Code ด้านบน',
 };
