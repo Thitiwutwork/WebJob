@@ -45,7 +45,7 @@ export const AfterSalesPage: React.FC = () => {
       promoPrice: 1490,
       normalPrice: 1990,
       popular: true,
-      badge: 'แนะนำสำหรับธุรกิจ (Most Popular)',
+      badge: '⭐ ยอดนิยม (Most Popular)',
       desc: 'เหมาะสำหรับผู้ที่นำระบบไปใช้งานจริงและต้องการความช่วยเหลือเป็นประจำ',
       hoursPerMonth: '2 ชั่วโมง / เดือน',
       features: [
@@ -192,8 +192,8 @@ export const AfterSalesPage: React.FC = () => {
             >
               {/* Badge */}
               {pkg.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <span className="px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20">
+                  <span className="whitespace-nowrap inline-flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/40 ring-1 ring-white/20">
                     {pkg.badge}
                   </span>
                 </div>
@@ -271,6 +271,72 @@ export const AfterSalesPage: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Bundle Value Stacking Section (Marketing Strategy) */}
+      <div className="rounded-3xl bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/80 border border-purple-500/30 p-8 sm:p-10 space-y-6 shadow-2xl">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-xs font-mono font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Smart Bundles — ซื้อคู่ Source Code ประหยัดสูงสุด 50%</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white">
+              หมดกังวลเรื่องการติดตั้งและดูแลระบบ ด้วยแพ็กเกจบันเดิลสุดคุ้ม
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              เมื่อคุณสั่งซื้อ Source Code ใน Marketplace คุณสามารถเลือกแพ็กเกจ <strong>Starter Bundle (+฿890)</strong> เพื่อรับบริการติดตั้งขึ้น Cloud และฟรีดูแลระบบ 1 เดือนทันที หรือเลือก <strong>Business Turnkey (+฿2,990)</strong> เพื่อรับการติดตั้ง ปรับแต่งแบรนด์ และดูแล VIP ต่อเนื่อง 3 เดือนเต็ม
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Link to="/marketplace">
+              <Button
+                variant="primary"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+                className="from-purple-600 to-indigo-600 shadow-xl shadow-purple-600/30 whitespace-nowrap"
+              >
+                เลือกดู Source Code ใน Marketplace
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* 3 Bundle Comparison Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
+          <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-white text-sm">1. Standard</h4>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">เฉพาะโค้ด</span>
+            </div>
+            <p className="text-xs text-slate-400">รับ Source Code เต็ม 100% พร้อมคู่มือ สำหรับนักพัฒนาที่ติดตั้งเอง</p>
+            <span className="text-xs text-slate-300 font-mono font-bold block pt-1">ราคาปกติของสินค้า</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-950/90 border border-indigo-500/50 space-y-2 relative">
+            <div className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500 text-white font-mono">
+              ประหยัด ฿1,400
+            </div>
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-indigo-300 text-sm">2. 🚀 Starter Bundle</h4>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">แนะนำ</span>
+            </div>
+            <p className="text-xs text-slate-300">โค้ด + บริการติดตั้งขึ้น Cloud ให้พร้อมใช้งาน + ดูแลระบบ Care Basic ฟรี 1 เดือน</p>
+            <span className="text-xs text-indigo-300 font-mono font-bold block pt-1">+ ฿890 จากราคาโค้ด</span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-950/90 border border-purple-500/50 space-y-2 relative">
+            <div className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500 text-white font-mono">
+              ประหยัด ฿4,980
+            </div>
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-purple-300 text-sm">3. 👑 Business Turnkey</h4>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-400 border border-purple-800">VIP</span>
+            </div>
+            <p className="text-xs text-slate-300">โค้ด + ติดตั้ง Custom Domain + ปรับแต่งแบรนด์/โลโก้ + ดูแล Care Pro 3 เดือน</p>
+            <span className="text-xs text-purple-300 font-mono font-bold block pt-1">+ ฿2,990 จากราคาโค้ด</span>
+          </div>
         </div>
       </div>
 

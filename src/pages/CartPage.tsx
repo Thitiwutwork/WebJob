@@ -60,18 +60,23 @@ export const CartPage: React.FC = () => {
                   >
                     {item.product.title}
                   </Link>
+                  {item.bundleLabel && (
+                    <span className="inline-block mt-1 text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60">
+                      {item.bundleLabel}
+                    </span>
+                  )}
                   <span className="text-xs text-slate-400 block font-mono mt-1">
-                    ฿{Number(item.product.price).toLocaleString()} &times; {item.quantity}
+                    ฿{Number(item.bundlePrice ?? item.product.price).toLocaleString()} &times; {item.quantity}
                   </span>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
                 <span className="text-base font-bold text-white font-mono whitespace-nowrap">
-                  ฿{(item.product.price * item.quantity).toLocaleString()}
+                  ฿{((item.bundlePrice ?? item.product.price) * item.quantity).toLocaleString()}
                 </span>
                 <button
-                  onClick={() => removeFromCart(item.product.id)}
+                  onClick={() => removeFromCart(item.product.id, item.bundleTier)}
                   className="p-2 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-colors"
                   title="ลบออกจากตะกร้า"
                 >

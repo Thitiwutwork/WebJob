@@ -13,13 +13,14 @@ import {
   FileCode,
   Package,
   Headphones,
+  Sparkles,
 } from 'lucide-react';
 import { productService } from '../services/productService';
 import { reviewService } from '../services/reviewService';
 import { orderService } from '../services/orderService';
 import { Product, Review } from '../types/database';
-import { useCart } from '../../src/context/CartContext';
-import { useAuth } from '../../src/context/AuthContext';
+import { useCart, BundleTier } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 
@@ -32,6 +33,51 @@ export const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedBundle, setSelectedBundle] = useState<BundleTier>('starter_bundle');
+
+  const bundleOptions = [
+    {
+      id: 'standard' as BundleTier,
+      name: 'Standard (เฉพาะ Source Code)',
+      badge: 'Standalone',
+      addedPrice: 0,
+      description: 'รับ Full Source Code 100% พร้อมคู่มือติดตั้ง สำหรับนักพัฒนาที่นำไปติดตั้งเอง',
+      savingsText: null,
+      features: ['Full Source Code 100%', 'รับประกันแก้ไขบั๊กเดิม 7 วัน', 'Commercial License'],
+    },
+    {
+      id: 'starter_bundle' as BundleTier,
+      name: 'Starter Bundle — โค้ด + ติดตั้ง + Care Basic 1 เดือน',
+      badge: '⭐ ยอดนิยม ประหยัด ฿1,400',
+      addedPrice: 890,
+      description: 'บริการติดตั้ง Deploy ขึ้น Cloud (Vercel/Supabase) ให้พร้อมใช้งานจริง + ฟรีดูแลระบบ Care Basic 1 เดือน',
+      savingsText: 'ประหยัด ฿1,400 (ปกติค่าติดตั้ง ฿1,500 + Care Basic ฿790 = ฿2,290)',
+      features: [
+        'Full Source Code 100%',
+        'บริการ Deploy ขึ้น Cloud ให้พร้อมใช้งานจริง',
+        'ฟรี ดูแลระบบ Care Basic 1 เดือน (มูลค่า ฿790)',
+        'รับประกันบั๊กและปรึกษาตลอดเดือน'
+      ],
+    },
+    {
+      id: 'business_bundle' as BundleTier,
+      name: 'Business Turnkey — โค้ด + ติดตั้ง + ปรับแบรนด์ + Care Pro 3 เดือน',
+      badge: '👑 คุ้มค่าสูงสุดสำหรับธุรกิจ',
+      addedPrice: 2990,
+      description: 'ระบบพร้อมรันธุรกิจแบบ Turnkey ติดตั้ง Custom Domain ปรับโลโก้/สี และดูแลระดับ Pro ต่อเนื่อง 3 เดือนเต็ม',
+      savingsText: 'ประหยัด ฿4,980 (ปกติค่าติดตั้ง+ปรับแบรนด์ ฿3,500 + Care Pro 3 ด. ฿4,470 = ฿7,970)',
+      features: [
+        'Full Source Code 100%',
+        'บริการติดตั้งเชื่อมต่อ Custom Domain เบ็ดเสร็จ',
+        'ปรับแต่งโลโก้ ข้อมูลร้าน และโทนสี',
+        'ฟรี ดูแลระบบ Care Pro 3 เดือนเต็ม (มูลค่า ฿4,470)',
+        'Priority Queue & ด่วนพิเศษ'
+      ],
+    },
+  ];
+
+  const currentBundle = bundleOptions.find((b) => b.id === selectedBundle) || bundleOptions[0];
+  const finalPrice = product ? Number(product.price) + currentBundle.addedPrice : 0;
 
   // Review Eligibility & Form State
   const [eligibility, setEligibility] = useState<{ eligible: boolean; orderItemId?: string; reason?: string }>({
@@ -82,15 +128,21 @@ export const ProductDetailPage: React.FC = () => {
     fetchProductData();
   }, [slug, user]);
 
-  const isAlreadyInCart = cart.some((item) => item.product.id === product?.id);
+  const isAlreadyInCart = cart.some(
+    (item) => item.product.id === product?.id && (item.bundleTier || 'standard') === selectedBundle
+  );
 
   const handleAddToCart = () => {
-    if (product) addToCart(product, 1);
+    if (product) {
+      addToCart(product, 1, selectedBundle, finalPrice, currentBundle.name);
+    }
   };
 
   const handleBuyNow = () => {
     if (product) {
-      if (!isAlreadyInCart) addToCart(product, 1);
+      if (!isAlreadyInCart) {
+        addToCart(product, 1, selectedBundle, finalPrice, currentBundle.name);
+      }
       navigate('/cart');
     }
   };
@@ -205,17 +257,104 @@ export const ProductDetailPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Pricing Box */}
+          {/* Bundle Selector (Marketing Strategy) */}
+          <div className="space-y-3 pt-1">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                เลือกแพ็กเกจการสั่งซื้อ (Choose Bundle Option)
+              </label>
+              <Link to="/after-sales" className="text-[11px] text-indigo-400 hover:text-indigo-300 font-mono underline">
+                ดูเงื่อนไขบริการหลังการขาย &gt;
+              </Link>
+            </div>
+
+            <div className="space-y-2.5">
+              {bundleOptions.map((opt) => {
+                const optPrice = product ? Number(product.price) + opt.addedPrice : 0;
+                const isSelected = selectedBundle === opt.id;
+                return (
+                  <div
+                    key={opt.id}
+                    onClick={() => setSelectedBundle(opt.id)}
+                    className={`cursor-pointer p-3.5 rounded-2xl border transition-all duration-200 relative ${
+                      isSelected
+                        ? 'bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500 ring-1 ring-indigo-500/50 shadow-lg shadow-indigo-500/10'
+                        : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                            isSelected ? 'border-indigo-400 bg-indigo-500' : 'border-slate-700 bg-slate-900'
+                          }`}
+                        >
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-sm font-bold text-white">{opt.name}</span>
+                            {opt.badge && (
+                              <span
+                                className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold whitespace-nowrap ${
+                                  opt.id === 'starter_bundle'
+                                    ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
+                                    : opt.id === 'business_bundle'
+                                    ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40'
+                                    : 'bg-slate-800 text-slate-400'
+                                }`}
+                              >
+                                {opt.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-400 mt-1 leading-relaxed">{opt.description}</p>
+                          {opt.savingsText && (
+                            <span className="text-[11px] text-emerald-400 font-mono font-semibold block mt-1">
+                              ✓ {opt.savingsText}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-base font-black text-white font-mono block">
+                          ฿{optPrice.toLocaleString('th-TH')}
+                        </span>
+                        {opt.addedPrice > 0 ? (
+                          <span className="text-[10px] text-indigo-300 font-mono">
+                            (+฿{opt.addedPrice.toLocaleString()})
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-slate-500 font-mono">ราคาปกติ</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Dynamic Pricing Box */}
           <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 flex items-baseline justify-between">
             <div>
-              <span className="text-xs text-slate-400 font-mono block">ราคาจำหน่ายสุทธิ</span>
+              <span className="text-xs text-slate-400 font-mono block">
+                ยอดชำระสุทธิ ({currentBundle.name.split('—')[0]})
+              </span>
               <span className="text-3xl font-black text-white font-mono">
-                ฿{Number(product.price).toLocaleString('th-TH')}
+                ฿{finalPrice.toLocaleString('th-TH')}
               </span>
             </div>
-            <span className="text-xs text-emerald-400 font-mono bg-emerald-950/60 px-2 py-1 rounded border border-emerald-800/40">
-              One-Time Payment
-            </span>
+            {currentBundle.addedPrice > 0 ? (
+              <span className="text-xs text-emerald-400 font-mono bg-emerald-950/60 px-2 py-1 rounded border border-emerald-800/40">
+                ประหยัดแบบ Bundle
+              </span>
+            ) : (
+              <span className="text-xs text-slate-400 font-mono bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                One-Time Payment
+              </span>
+            )}
           </div>
 
           {/* Digital Delivery Status */}

@@ -72,8 +72,8 @@ export const OrderCheckoutPage: React.FC = () => {
         customer_id: customerId,
         items: cart.map((item) => ({
           product_id: item.product.id,
-          product_title: item.product.title,
-          unit_price: item.product.price,
+          product_title: item.bundleLabel ? `${item.product.title} [${item.bundleLabel}]` : item.product.title,
+          unit_price: item.bundlePrice ?? item.product.price,
           quantity: item.quantity,
         })),
       });
@@ -212,15 +212,20 @@ export const OrderCheckoutPage: React.FC = () => {
 
           <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
             {cart.map((item) => (
-              <div key={item.product.id} className="flex justify-between items-center text-xs">
+              <div key={item.product.id} className="flex justify-between items-start text-xs border-b border-slate-800/40 pb-2">
                 <div className="pr-2">
                   <span className="text-white font-medium block truncate max-w-[200px]">
                     {item.product.title}
                   </span>
-                  <span className="text-slate-500 font-mono">จำนวน: {item.quantity}</span>
+                  {item.bundleLabel && (
+                    <span className="inline-block text-[10px] font-mono px-1.5 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60 mt-0.5">
+                      {item.bundleLabel}
+                    </span>
+                  )}
+                  <span className="text-slate-500 font-mono block text-[11px] mt-0.5">จำนวน: {item.quantity}</span>
                 </div>
-                <span className="text-white font-bold font-mono">
-                  ฿{(item.product.price * item.quantity).toLocaleString()}
+                <span className="text-white font-bold font-mono whitespace-nowrap">
+                  ฿{((item.bundlePrice ?? item.product.price) * item.quantity).toLocaleString()}
                 </span>
               </div>
             ))}
