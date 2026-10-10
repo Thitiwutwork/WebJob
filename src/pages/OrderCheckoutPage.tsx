@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -9,10 +9,14 @@ import {
   CheckCircle2,
   Lock,
   ArrowLeft,
+  Copy,
+  Check,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { orderService } from '../services/orderService';
+import { settingService } from '../services/settingService';
+import { SiteSettings } from '../types/database';
 import { Button } from '../components/common/Button';
 
 export const OrderCheckoutPage: React.FC = () => {
@@ -26,6 +30,13 @@ export const OrderCheckoutPage: React.FC = () => {
   const [transactionRef, setTransactionRef] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [copiedBank, setCopiedBank] = useState(false);
+  const [copiedPromptpay, setCopiedPromptpay] = useState(false);
+
+  useEffect(() => {
+    settingService.getSettings().then(setSettings).catch(console.error);
+  }, []);
 
   if (cart.length === 0) {
     navigate('/cart');
@@ -132,21 +143,53 @@ export const OrderCheckoutPage: React.FC = () => {
             </h3>
 
             <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-slate-400">ธนาคาร</span>
-                <span className="text-white font-bold">ธนาคารกสิกรไทย (KBANK)</span>
+                <span className="text-white font-bold">{settings?.bank_name || 'ธนาคารกสิกรไทย (KBANK)'}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-slate-400">เลขที่บัญชี</span>
-                <span className="text-indigo-400 font-bold text-sm tracking-wider">098-X-XXXXX-X</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-indigo-400 font-bold text-sm tracking-wider">
+                    {settings?.bank_account_number || '147-1-89244-6'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(settings?.bank_account_number || '147-1-89244-6');
+                      setCopiedBank(true);
+                      setTimeout(() => setCopiedBank(false), 2000);
+                    }}
+                    className="p-1 px-2 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[10px] flex items-center gap-1 border border-slate-800 transition-colors cursor-pointer"
+                  >
+                    {copiedBank ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedBank ? 'คัดลอกแล้ว' : 'คัดลอก'}</span>
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-slate-400">ชื่อบัญชี</span>
-                <span className="text-white">นาย ธิติวัฒน์ (Thitiwut)</span>
+                <span className="text-white">{settings?.bank_account_name || 'นาย ธิติวัฒน์ (Thitiwut)'}</span>
               </div>
-              <div className="flex justify-between border-t border-slate-800 pt-2">
+              <div className="flex justify-between items-center border-t border-slate-800 pt-2">
                 <span className="text-slate-400">PromptPay ID</span>
-                <span className="text-purple-400 font-bold">098-XXX-XXXX</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-purple-400 font-bold">
+                    {settings?.promptpay_number || '098-941-8924'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(settings?.promptpay_number || '098-941-8924');
+                      setCopiedPromptpay(true);
+                      setTimeout(() => setCopiedPromptpay(false), 2000);
+                    }}
+                    className="p-1 px-2 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[10px] flex items-center gap-1 border border-slate-800 transition-colors cursor-pointer"
+                  >
+                    {copiedPromptpay ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedPromptpay ? 'คัดลอกแล้ว' : 'คัดลอก'}</span>
+                  </button>
+                </div>
               </div>
             </div>
 

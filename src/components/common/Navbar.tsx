@@ -83,8 +83,8 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action Icons & Auth */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Right Action Icons & Auth (Desktop) */}
+          <div className="hidden lg:flex items-center gap-3">
             {/* Cart Button */}
             <Link
               to="/cart"
@@ -151,8 +151,8 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Menu Hamburger */}
-          <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile & Tablet Menu Hamburger */}
+          <div className="flex lg:hidden items-center gap-2">
             <Link
               to="/cart"
               className="relative p-2 rounded-lg bg-slate-900 text-slate-300 border border-slate-800"

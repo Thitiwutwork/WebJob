@@ -1,21 +1,15 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Star, ExternalLink, ArrowRight, Check, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Star, ExternalLink, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Product } from '../../types/database';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
-import { useCart } from '../../context/CartContext';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart, cart } = useCart();
-  const navigate = useNavigate();
-
-  const isAlreadyInCart = cart.some((item) => item.product.id === product.id);
-
   const getProductTypeLabel = (type: string) => {
     switch (type) {
       case 'template':
@@ -31,14 +25,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       default:
         return 'Digital Product';
     }
-  };
-
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!isAlreadyInCart) {
-      addToCart(product, 1);
-    }
-    navigate('/cart');
   };
 
   return (
@@ -128,22 +114,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => addToCart(product, 1)}
-              icon={isAlreadyInCart ? <Check className="w-4 h-4 text-emerald-400" /> : <ShoppingCart className="w-4 h-4" />}
-            >
-              {isAlreadyInCart ? 'ในตะกร้าแล้ว' : 'ใส่ตะกร้า'}
-            </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleBuyNow}
-              className="from-purple-600 to-indigo-600 shadow-purple-500/20"
-            >
-              สั่งซื้อทันที
-            </Button>
+            <Link to={`/marketplace/${product.slug}`} className="w-full">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="w-full text-xs"
+              >
+                ดูรายละเอียด
+              </Button>
+            </Link>
+            <Link to={`/marketplace/${product.slug}`} className="w-full">
+              <Button
+                variant="primary"
+                size="sm"
+                icon={<ArrowRight className="w-3.5 h-3.5" />}
+                className="w-full from-purple-600 to-indigo-600 shadow-purple-500/20 text-xs"
+              >
+                เลือกแพ็กเกจ & ซื้อ
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

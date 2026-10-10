@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Trash2, ArrowRight, ShieldCheck, Lock } from 'lucide-react';
+import { ShoppingCart, Trash2, ArrowRight, ShieldCheck, Lock, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
 
 export const CartPage: React.FC = () => {
-  const { cart, removeFromCart, clearCart, totalAmount, totalCount } = useCart();
+  const { cart, updateItemBundle, removeFromCart, clearCart, totalAmount, totalCount } = useCart();
   const navigate = useNavigate();
 
   if (cart.length === 0) {
@@ -44,45 +44,77 @@ export const CartPage: React.FC = () => {
         <div className="lg:col-span-8 space-y-4">
           {cart.map((item) => (
             <div
-              key={item.product.id}
-              className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center gap-4 justify-between"
+              key={`${item.product.id}-${item.bundleTier || 'standard'}`}
+              className="p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3"
             >
-              <div className="flex items-center gap-4">
-                <img
-                  src={item.product.thumbnail_url}
-                  alt={item.product.title}
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl bg-slate-950 shrink-0"
-                />
-                <div>
-                  <Link
-                    to={`/marketplace/${item.product.slug}`}
-                    className="text-sm font-bold text-white hover:text-indigo-400 transition-colors line-clamp-1"
-                  >
-                    {item.product.title}
-                  </Link>
-                  {item.bundleLabel && (
-                    <span className="inline-block mt-1 text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60">
-                      {item.bundleLabel}
+              <div className="flex items-center gap-4 justify-between">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={item.product.thumbnail_url}
+                    alt={item.product.title}
+                    className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl bg-slate-950 shrink-0"
+                  />
+                  <div>
+                    <Link
+                      to={`/marketplace/${item.product.slug}`}
+                      className="text-sm font-bold text-white hover:text-indigo-400 transition-colors line-clamp-1"
+                    >
+                      {item.product.title}
+                    </Link>
+                    {item.bundleLabel && (
+                      <span className="inline-block mt-1 text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60">
+                        {item.bundleLabel}
+                      </span>
+                    )}
+                    <span className="text-xs text-slate-400 block font-mono mt-1">
+                      ฿{Number(item.bundlePrice ?? item.product.price).toLocaleString()} &times; {item.quantity}
                     </span>
-                  )}
-                  <span className="text-xs text-slate-400 block font-mono mt-1">
-                    ฿{Number(item.bundlePrice ?? item.product.price).toLocaleString()} &times; {item.quantity}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="text-base font-bold text-white font-mono whitespace-nowrap">
+                    ฿{((item.bundlePrice ?? item.product.price) * item.quantity).toLocaleString()}
                   </span>
+                  <button
+                    onClick={() => removeFromCart(item.product.id, item.bundleTier)}
+                    className="p-2 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-colors cursor-pointer"
+                    title="ลบออกจากตะกร้า"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                <span className="text-base font-bold text-white font-mono whitespace-nowrap">
-                  ฿{((item.bundlePrice ?? item.product.price) * item.quantity).toLocaleString()}
-                </span>
-                <button
-                  onClick={() => removeFromCart(item.product.id, item.bundleTier)}
-                  className="p-2 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-colors"
-                  title="ลบออกจากตะกร้า"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
+              {/* In-Cart Upsell Offer for Standard Items */}
+              {(!item.bundleTier || item.bundleTier === 'standard') && (
+                <div className="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-indigo-950/20 -mx-4 -mb-4 sm:-mx-5 sm:-mb-5 p-3 sm:px-4 rounded-b-2xl border-t border-indigo-900/30">
+                  <div className="text-xs space-y-0.5">
+                    <span className="font-bold text-indigo-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                      อัปเกรดเป็น Starter Bundle (ติดตั้ง + ดูแล 1 เดือน)
+                    </span>
+                    <p className="text-[11px] text-slate-400">
+                      บริการเสริมมูลค่า ฿2,290 จ่ายเพิ่มเพียง <strong className="text-white">+฿890</strong> (ประหยัด ฿1,400)
+                    </p>
+                  </div>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() =>
+                      updateItemBundle(
+                        item.product.id,
+                        'starter_bundle',
+                        Number(item.product.price) + 890,
+                        'โค้ด + ติดตั้ง + ดูแล 1 เดือน'
+                      )
+                    }
+                    className="text-xs whitespace-nowrap from-indigo-500 to-purple-600 shadow-md shadow-indigo-500/20"
+                  >
+                    + อัปเกรด ฿890
+                  </Button>
+                </div>
+              )}
             </div>
           ))}
         </div>

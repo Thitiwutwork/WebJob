@@ -135,23 +135,23 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Quick Stats or Domain proof */}
+          {/* Quick Value Highlights */}
           <div className="pt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-left">
             <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="text-xs text-slate-400 font-mono block">Primary Domain</span>
-              <span className="text-sm font-bold text-white font-mono">namenoname.store</span>
+              <span className="text-xs text-indigo-400 font-mono block font-bold">100% Source Code</span>
+              <span className="text-sm font-bold text-white">ส่งมอบโค้ดเต็ม 100%</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="text-xs text-slate-400 font-mono block">Target Architecture</span>
-              <span className="text-sm font-bold text-white font-mono">React + Supabase</span>
+              <span className="text-xs text-emerald-400 font-mono block font-bold">Bug Warranty</span>
+              <span className="text-sm font-bold text-white">รับประกันความเสถียร</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="text-xs text-slate-400 font-mono block">Security Model</span>
-              <span className="text-sm font-bold text-white font-mono">Postgres RLS Guard</span>
+              <span className="text-xs text-purple-400 font-mono block font-bold">Cloud Deployment</span>
+              <span className="text-sm font-bold text-white">ติดตั้งขึ้น Cloud พร้อมรัน</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="text-xs text-slate-400 font-mono block">Hosting Platform</span>
-              <span className="text-sm font-bold text-white font-mono">Vercel Edge Global</span>
+              <span className="text-xs text-amber-400 font-mono block font-bold">After-Sales Care</span>
+              <span className="text-sm font-bold text-white">มีบริการดูแลต่อเนื่อง</span>
             </div>
           </div>
         </div>

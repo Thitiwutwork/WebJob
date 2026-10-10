@@ -282,8 +282,17 @@ export const ProductDetailPage: React.FC = () => {
                 return (
                   <div
                     key={opt.id}
+                    role="radio"
+                    aria-checked={isSelected}
+                    tabIndex={0}
                     onClick={() => setSelectedBundle(opt.id)}
-                    className={`cursor-pointer p-3.5 rounded-2xl border transition-all duration-200 relative ${
+                    onKeyDown={(e) => {
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        setSelectedBundle(opt.id);
+                      }
+                    }}
+                    className={`cursor-pointer p-3.5 rounded-2xl border transition-all duration-200 relative focus-visible:ring-2 focus-visible:ring-indigo-500 focus:outline-none ${
                       isSelected
                         ? 'bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500 ring-1 ring-indigo-500/50 shadow-lg shadow-indigo-500/10'
                         : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'

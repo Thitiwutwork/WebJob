@@ -20,6 +20,12 @@ interface CartContextType {
     bundlePrice?: number,
     bundleLabel?: string
   ) => void;
+  updateItemBundle: (
+    productId: string,
+    bundleTier: BundleTier,
+    bundlePrice: number,
+    bundleLabel: string
+  ) => void;
   removeFromCart: (productId: string, bundleTier?: BundleTier) => void;
   clearCart: () => void;
   totalAmount: number;
@@ -79,6 +85,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const updateItemBundle = (
+    productId: string,
+    bundleTier: BundleTier,
+    bundlePrice: number,
+    bundleLabel: string
+  ) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.product.id === productId
+          ? {
+              ...item,
+              bundleTier,
+              bundlePrice,
+              bundleLabel,
+            }
+          : item
+      )
+    );
+  };
+
   const removeFromCart = (productId: string, bundleTier?: BundleTier) => {
     setCart((prev) =>
       prev.filter(
@@ -106,6 +132,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         cart,
         addToCart,
+        updateItemBundle,
         removeFromCart,
         clearCart,
         totalAmount,

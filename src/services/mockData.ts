@@ -406,7 +406,7 @@ export const INITIAL_SETTINGS: SiteSettings = {
   github_url: '',
   domain: 'namenoname.store',
   bank_name: 'ธนาคารกสิกรไทย (Kasikorn Bank)',
-  bank_account_number: '098-X-XXXXX-X',
+  bank_account_number: '147-1-89244-6',
   bank_account_name: 'นาย ธิติวัฒน์ (Thitiwut)',
-  promptpay_number: '098-XXX-XXXX',
+  promptpay_number: '098-941-8924',
 };
