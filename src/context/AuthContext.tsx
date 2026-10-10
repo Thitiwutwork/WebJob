@@ -10,6 +10,8 @@ interface AuthContextType {
   register: (email: string, password?: string, fullName?: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<Profile>) => Promise<void>;
+  resetPasswordForEmail: (email: string) => Promise<{ success: boolean; error?: string }>;
+  updatePassword: (newPassword: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -189,6 +191,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(updated));
   };
 
+  const resetPasswordForEmail = async (email: string): Promise<{ success: boolean; error?: string }> => {
+    if (isSupabaseConfigured()) {
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) {
+          return { success: false, error: error.message };
+        }
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'เกิดข้อผิดพลาดในการส่งอีเมลรีเซ็ตรหัสผ่าน' };
+      }
+    }
+    return { success: true };
+  };
+
+  const updatePassword = async (newPassword: string): Promise<{ success: boolean; error?: string }> => {
+    if (isSupabaseConfigured()) {
+      try {
+        const { error } = await supabase.auth.updateUser({ password: newPassword });
+        if (error) {
+          return { success: false, error: error.message };
+        }
+        return { success: true };
+      } catch (err: any) {
+        return { success: false, error: err.message || 'เกิดข้อผิดพลาดในการเปลี่ยนรหัสผ่าน' };
+      }
+    }
+    return { success: true };
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -199,6 +233,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         register,
         logout,
         updateProfile,
+        resetPasswordForEmail,
+        updatePassword,
       }}
     >
       {children}

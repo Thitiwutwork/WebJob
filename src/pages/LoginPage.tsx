@@ -30,7 +30,14 @@ export const LoginPage: React.FC = () => {
           navigate(from);
         }
       } else {
-        setError(result.error || 'เข้าสู่ระบบไม่สำเร็จ');
+        const errorMsg = result.error || 'เข้าสู่ระบบไม่สำเร็จ';
+        if (errorMsg.toLowerCase().includes('email not confirmed')) {
+          setError('อีเมลนี้ยังไม่ได้ยืนยันตัวตน กรุณาตรวจสอบกล่องข้อความ/Spam หรือติดต่อแอดมิน');
+        } else if (errorMsg.toLowerCase().includes('invalid login credentials')) {
+          setError('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+        } else {
+          setError(errorMsg);
+        }
       }
     } catch (err: any) {
       setError(err.message || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
@@ -78,9 +85,17 @@ export const LoginPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
-              รหัสผ่าน (Password)
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-mono text-slate-300 uppercase">
+                รหัสผ่าน (Password)
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-xs text-indigo-400 hover:text-indigo-300 hover:underline transition-colors font-medium"
+              >
+                ลืมรหัสผ่าน?
+              </Link>
+            </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
