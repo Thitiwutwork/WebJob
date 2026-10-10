@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/secure-download
+
+Sitemap: https://namenoname.store/sitemap.xml
