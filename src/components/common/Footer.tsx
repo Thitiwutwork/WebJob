@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Globe, Mail, MessageSquare, Terminal, Heart } from 'lucide-react';
-import { GithubIcon } from './GithubIcon';
 
 export const Footer: React.FC = () => {
   return (
@@ -21,15 +20,6 @@ export const Footer: React.FC = () => {
               สร้างบนสถาปัตยกรรมที่ปลอดภัย ทันสมัย และตอบโจทย์ธุรกิจจริง
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <a
-                href="https://github.com/Thitiwutwork/WebJob"
-                target="_blank"
-                rel="noreferrer"
-                className="w-10 h-10 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 flex items-center justify-center transition-colors"
-                title="GitHub Repository"
-              >
-                <GithubIcon className="w-5 h-5" />
-              </a>
               <a
                 href="https://namenoname.store"
                 className="w-10 h-10 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 flex items-center justify-center transition-colors"

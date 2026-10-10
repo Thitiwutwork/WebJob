@@ -10,7 +10,6 @@ import {
   Layers,
   Calendar,
 } from 'lucide-react';
-import { GithubIcon } from '../components/common/GithubIcon';
 import { projectService } from '../services/projectService';
 import { Project } from '../types/database';
 import { Button } from '../components/common/Button';
@@ -117,13 +116,6 @@ export const ProjectDetailPage: React.FC = () => {
                 className="shadow-lg shadow-indigo-500/20"
               >
                 เปิดดู Live Demo เว็บไซต์
-              </Button>
-            </a>
-          )}
-          {project.source_code_url && (
-            <a href={project.source_code_url} target="_blank" rel="noreferrer">
-              <Button variant="secondary" size="md" icon={<GithubIcon className="w-4 h-4" />}>
-                ดู Source Code (GitHub)
               </Button>
             </a>
           )}

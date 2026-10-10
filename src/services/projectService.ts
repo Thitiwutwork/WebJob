@@ -12,7 +12,7 @@ const getLocalProjects = (): Project[] => {
   }
   try {
     const parsed = JSON.parse(data);
-    if (!parsed.some((p: any) => p.id === 'proj-stocklin')) {
+    if (!parsed.some((p: any) => p.id === 'proj-rs232') || parsed.some((p: any) => p.id === 'proj-stocklin')) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
       return INITIAL_PROJECTS;
     }

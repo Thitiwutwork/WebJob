@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   Send,
 } from 'lucide-react';
-import { GithubIcon } from '../components/common/GithubIcon';
 import { serviceService } from '../services/serviceService';
 import { ServiceItem } from '../types/database';
 import { InquiryForm } from '../components/forms/InquiryForm';
@@ -113,23 +112,6 @@ export const ContactPage: React.FC = () => {
                     className="text-sm font-semibold text-white hover:text-purple-400 font-mono transition-colors"
                   >
                     namenoname.store
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-slate-800 text-slate-300 border border-slate-700 flex items-center justify-center shrink-0">
-                  <GithubIcon className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-xs text-slate-400 font-mono block">GitHub Organization</span>
-                  <a
-                    href="https://github.com/Thitiwutwork/WebJob"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm font-semibold text-white hover:text-indigo-400 font-mono transition-colors"
-                  >
-                    Thitiwutwork/WebJob
                   </a>
                 </div>
               </div>

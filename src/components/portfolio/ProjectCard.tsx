@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Sparkles } from 'lucide-react';
-import { GithubIcon } from '../common/GithubIcon';
 import { Project } from '../../types/database';
 import { Badge } from '../common/Badge';
 
@@ -43,17 +42,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               title="เปิดดู Live Demo"
             >
               <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
-          {project.source_code_url && (
-            <a
-              href={project.source_code_url}
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 rounded-xl bg-slate-950/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 backdrop-blur-md transition-colors"
-              title="ดู Source Code"
-            >
-              <GithubIcon className="w-4 h-4" />
             </a>
           )}
         </div>
