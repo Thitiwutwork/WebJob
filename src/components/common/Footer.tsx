@@ -64,6 +64,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/after-sales" className="hover:text-indigo-400 transition-colors text-indigo-300 font-semibold">
+                  บริการหลังการขาย (After-Sales)
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="hover:text-indigo-400 transition-colors">
                   ขอใบเสนอราคา (Get a Quote)
                 </Link>

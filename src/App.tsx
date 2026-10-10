@@ -12,6 +12,7 @@ import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { MarketplacePage } from './pages/MarketplacePage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { AfterSalesPage } from './pages/AfterSalesPage';
 import { ContactPage } from './pages/ContactPage';
 import { CartPage } from './pages/CartPage';
 import { OrderCheckoutPage } from './pages/OrderCheckoutPage';
@@ -68,6 +69,7 @@ export function App() {
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/marketplace" element={<MarketplacePage />} />
               <Route path="/marketplace/:slug" element={<ProductDetailPage />} />
+              <Route path="/after-sales" element={<AfterSalesPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
               {/* Cart & Checkout */}

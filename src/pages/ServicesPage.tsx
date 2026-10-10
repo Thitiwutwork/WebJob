@@ -9,6 +9,7 @@ import {
   ArrowRight,
   ShieldCheck,
   Zap,
+  Headphones,
 } from 'lucide-react';
 import { serviceService } from '../services/serviceService';
 import { ServiceItem } from '../types/database';
@@ -134,6 +135,36 @@ export const ServicesPage: React.FC = () => {
         </div>
       )}
 
+      {/* After-Sales Service Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/60 to-slate-900 border border-indigo-500/30 p-8 sm:p-10 shadow-2xl">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-mono">
+              <Headphones className="w-3.5 h-3.5" />
+              บริการหลังการขาย (After-Sales Service)
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white">
+              ซื้อ Source Code หรือพัฒนาระบบกับเรา ดูแลต่อเนื่องอย่างมั่นใจ
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              เรามีแพ็กเกจดูแลระบบรายเดือน <strong>Care Basic (฿590/ด.)</strong>, <strong>Care Pro (฿1,490/ด.)</strong> และ <strong>Care Business (฿2,990/ด.)</strong> ช่วยดูแล แก้ไขบั๊ก และตรวจสอบระบบเชิงเทคนิคอย่างต่อเนื่อง
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Link to="/after-sales">
+              <Button
+                variant="primary"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+                className="from-indigo-600 to-purple-600 shadow-xl shadow-indigo-600/30 whitespace-nowrap"
+              >
+                ดูรายละเอียดแพ็กเกจดูแลระบบ
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Assurance banner */}
       <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="space-y-1 text-center sm:text-left">
@@ -142,7 +173,7 @@ export const ServicesPage: React.FC = () => {
             การรับประกันและความปลอดภัยของซอร์สโค้ด
           </h3>
           <p className="text-xs text-slate-400">
-            ทุกโปรเจกต์ส่งมอบ Full Source Code บน GitHub ส่วนตัวของคุณ พร้อมสิทธิ์ขาด 100% และรับประกันแก้ไขข้อผิดพลาดฟรี
+            ทุกโปรเจกต์ส่งมอบ Full Source Code พร้อมสิทธิ์ขาด 100% เอกสารแนะนำการติดตั้ง และรับประกันแก้ไขข้อผิดพลาดฟรี
           </p>
         </div>
         <Link to="/contact">

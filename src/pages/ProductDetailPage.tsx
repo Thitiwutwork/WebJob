@@ -12,6 +12,7 @@ import {
   AlertCircle,
   FileCode,
   Package,
+  Headphones,
 } from 'lucide-react';
 import { productService } from '../services/productService';
 import { reviewService } from '../services/reviewService';
@@ -274,6 +275,46 @@ export const ProductDetailPage: React.FC = () => {
             <p className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-3 rounded-xl border border-slate-800">
               {product.license_terms}
             </p>
+          </div>
+
+          {/* After-Sales Service Information */}
+          <div className="pt-4 border-t border-slate-800 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wider">
+                <Headphones className="w-3.5 h-3.5" />
+                บริการหลังการขาย
+              </span>
+              <Link to="/after-sales" className="text-[11px] text-indigo-400 hover:text-indigo-300 font-mono underline">
+                ดูแพ็กเกจดูแลระบบ &gt;
+              </Link>
+            </div>
+            <div className="bg-slate-950/80 p-3.5 rounded-xl border border-indigo-500/20 space-y-2 text-xs text-slate-300">
+              <ul className="space-y-1.5 text-xs text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>มีคำแนะนำการติดตั้งและใช้งานตามขอบเขตที่กำหนด</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>รับประกันการแก้ไขบั๊กจาก Source Code เดิมเป็นเวลา 7 วันหลังส่งมอบ โดยไม่รวมการเพิ่มฟีเจอร์และการแก้ไขโค้ดโดยบุคคลอื่น</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>มีแพ็กเกจดูแลระบบรายเดือนให้เลือก (Care Basic / Pro / Business)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>ค่า Hosting, Domain, Database และ API ภายนอกคิดแยกตามการใช้งานจริง</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>งานติดตั้งและปรับแต่งเพิ่มเติมสามารถขอใบเสนอราคาได้</span>
+                </li>
+              </ul>
+              <p className="text-[11px] text-slate-500 pt-2 border-t border-slate-800/80 italic">
+                *กรุณาตรวจสอบรายละเอียดสินค้าและขอบเขตการให้บริการก่อนสั่งซื้อ
+              </p>
+            </div>
           </div>
         </div>
       </div>

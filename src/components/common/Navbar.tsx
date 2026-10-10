@@ -13,6 +13,7 @@ import {
   X,
   LogOut,
   Sparkles,
+  Headphones,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -29,6 +30,7 @@ export const Navbar: React.FC = () => {
     { label: 'ผลงาน (Portfolio)', path: '/portfolio', icon: FolderGit2 },
     { label: 'บริการพัฒนาเว็บ', path: '/services', icon: Layers },
     { label: 'Marketplace', path: '/marketplace', icon: ShoppingBag },
+    { label: 'บริการหลังการขาย', path: '/after-sales', icon: Headphones },
     { label: 'ติดต่อ / ขอใบเสนอราคา', path: '/contact', icon: Mail },
   ];
 

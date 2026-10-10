@@ -16,6 +16,7 @@ import {
   Database,
   Globe,
   Rocket,
+  Headphones,
 } from 'lucide-react';
 import { projectService } from '../services/projectService';
 import { serviceService } from '../services/serviceService';
@@ -387,6 +388,58 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* After-Sales Service Highlight */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-indigo-500/30 p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div className="space-y-4 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-mono">
+                <Headphones className="w-3.5 h-3.5" />
+                <span>บริการหลังการขาย (After-Sales Service)</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                ซื้อ Source Code กับ ThitiwutWeb ไม่ได้จบแค่การรับโค้ด
+              </h2>
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                เรามีบริการช่วยดูแล แก้ไขปัญหา และให้คำแนะนำทางเทคนิคอย่างต่อเนื่อง
+                เลือกได้ตั้งแต่แพ็กเกจ <strong>Care Basic (฿590/ด.)</strong>, <strong>Care Pro (฿1,490/ด.)</strong> ไปจนถึง <strong>Care Business (฿2,990/ด.)</strong>
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2 text-xs text-slate-300 font-mono">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> รับประกันบั๊ก 7 วันหลังส่งมอบ
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> ตรวจสอบความพร้อมระบบเบื้องต้นฟรี
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> สิทธิพิเศษลดราคา 3 เดือนแรก
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+              <Link to="/after-sales">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                  className="w-full whitespace-nowrap shadow-xl shadow-indigo-600/30"
+                >
+                  ดูแพ็กเกจดูแลระบบ
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button variant="secondary" size="lg" className="w-full whitespace-nowrap">
+                  ขอคำแนะนำการติดตั้ง
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Final Call to Action */}
       <section className="max-w-5xl mx-auto px-4">

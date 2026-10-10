@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Star, ExternalLink, ArrowRight, Check } from 'lucide-react';
+import { ShoppingCart, Star, ExternalLink, ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { Product } from '../../types/database';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
@@ -102,6 +102,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <p className="text-sm text-slate-400 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
+
+          {/* After-Sales Guarantee Note */}
+          <div className="flex items-center gap-1.5 text-[11px] text-indigo-400 font-mono pt-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+            <span>มีบริการหลังการขาย • รับประกันบั๊ก 7 วัน</span>
+          </div>
         </div>
 
         {/* Price & Actions */}
