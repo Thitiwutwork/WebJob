@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { isSupabaseConfigured } from '../lib/supabase';
 import { Button } from '../components/common/Button';
 
 export const LoginPage: React.FC = () => {
@@ -38,11 +37,6 @@ export const LoginPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickLogin = (demoEmail: string) => {
-    setEmail(demoEmail);
-    setPassword('demo-password-123');
   };
 
   return (
@@ -110,31 +104,6 @@ export const LoginPage: React.FC = () => {
             เข้าสู่ระบบ
           </Button>
         </form>
-
-        {/* Quick Demo Switcher (Only in Local Mock Preview Mode) */}
-        {!isSupabaseConfigured() && (
-          <div className="pt-4 border-t border-slate-800 space-y-2">
-            <span className="text-[11px] font-mono text-indigo-400 block text-center">
-              🧪 สำหรับทดสอบระบบ (Local Mock Preview):
-            </span>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin@namenoname.store')}
-                className="p-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-indigo-300 font-mono text-center transition-colors cursor-pointer"
-              >
-                👑 สิทธิ์ Admin
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('customer@example.com')}
-                className="p-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 font-mono text-center transition-colors cursor-pointer"
-              >
-                👤 สิทธิ์ Customer
-              </button>
-            </div>
-          </div>
-        )}
 
         <div className="text-center text-xs text-slate-400 pt-2">
           ยังไม่มีบัญชีผู้ใช้?{' '}

@@ -230,7 +230,7 @@ export const ProductDetailPage: React.FC = () => {
           {/* Live Demo Trigger */}
           {product.demo_url && (
             <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
-              <span className="text-xs text-slate-300 font-medium">ต้องการทดสอบหน้าเว็บจริงก่อนซื้อ?</span>
+              <span className="text-xs text-slate-300 font-medium">ต้องการชมตัวอย่างระบบจริงก่อนสั่งซื้อ?</span>
               <a href={product.demo_url} target="_blank" rel="noreferrer">
                 <Button variant="outline" size="sm" icon={<ExternalLink className="w-4 h-4" />}>
                   เปิดดู Live Preview
