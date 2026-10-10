@@ -11,7 +11,12 @@ const getLocalProducts = (): Product[] => {
     return INITIAL_PRODUCTS;
   }
   try {
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!parsed.some((p: any) => p.id === 'prod-stocklin-kit')) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PRODUCTS));
+      return INITIAL_PRODUCTS;
+    }
+    return parsed;
   } catch {
     return INITIAL_PRODUCTS;
   }

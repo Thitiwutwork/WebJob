@@ -11,7 +11,12 @@ const getLocalProjects = (): Project[] => {
     return INITIAL_PROJECTS;
   }
   try {
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!parsed.some((p: any) => p.id === 'proj-stocklin')) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
+      return INITIAL_PROJECTS;
+    }
+    return parsed;
   } catch {
     return INITIAL_PROJECTS;
   }
